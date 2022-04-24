@@ -21,10 +21,10 @@ module.exports = {
 	findOneAuthor: (request, response)=> {
 		Author.findOne({_id:request.params.id})
 			.then(author => response.json(author))
-			.catch(err => response.json(err))
+			.catch(err => response.status(400).json(err))
 	},
 	updateAuthor: (request, response) => {
-		Author.findOneAndUpdate({_id: request.params.id}, request.body, {new: true})
+		Author.findOneAndUpdate({_id: request.params._id}, request.body, {new: true, runValidators: true, useFindAndModify: false})
 			.then(updatedAuthor => response.json(updatedAuthor))
 			.catch(err=> response.json(err))
 },
